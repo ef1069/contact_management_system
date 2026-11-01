@@ -1,0 +1,8 @@
+Hash tables are useful for fast lookups because they take the key given to them, put it through the hash function, then go directly to that index and work with the
+information at that index. It is much faster because a computer can do calculations with the key quickly to find an index, then go directly to it. This is 
+much faster than having all the information in a list and having to iterate through the entire list in order to find one data point. This is especially true when
+working with large amounts of data. Collisions are handled within the insert() function in the HashTable class through its iterative process. If the indexes
+match, it checks to see if the original keys match. If they do, the original value is replaced with the new value. If they are different, it adds a node 
+onto the linked list at the index, and so both values are saved at that index in the hash table. An engineer might choose a hash table over a list because
+hash tables are faster and can handle large amounts of data more easily; the time it takes to work with large amounts of data is much shorter with a hash table
+than with a list. Hash tables are also slightly faster than trees, which makes them a better choice if you are not working with a hierarchy or specific order. 
