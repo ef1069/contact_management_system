@@ -115,6 +115,19 @@ def main():
     contact = table.search("John")
     print("\nSearch result:", contact)
 
-    
+    # Edge Case 1 - Hash Collisions
+    table.insert("Amy", "111-222-3333")
+    table.insert("May", "222-333-1111")
+
+    print("\n")
+    table.print_table()
+
+    # Edge Case 2 - Duplicate Keys
+    table.insert("Rebecca", "999-444-9999")
+    print("\n")
+    table.print_table()
+
+    # Edge Case 3 - Searching for a value not in the table
+    print(table.search("Chris"))
 
 main()
