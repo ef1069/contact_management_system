@@ -4,9 +4,16 @@ class Contact:
     Attributes:
         name (str): The name of the contact.
         number (str): The phone number of the contact.
+    Methods:
+        __str__(self): Returns the contact information formatted
     '''
-    
-    pass # Delete this line when implementing the class
+    def __init__(self, name, number):
+        self.name = name
+        self.number = number
+
+    def __str__(self):
+        formatted_str = f"{self.name}: {self.number}"
+        return formatted_str
 
 class Node:
     '''
@@ -16,8 +23,10 @@ class Node:
         value (Contact): The value (Contact object) associated with the key.
         next (Node): Pointer to the next node in case of a collision.
     '''
-   
-    pass # Delete this line when implementing the class
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+        self.next = None
 
 class HashTable:
     '''
@@ -31,7 +40,81 @@ class HashTable:
         search(key): Searches for a contact by name.
         print_table(): Prints the structure of the hash table.
     '''
-    
-    pass # Delete this line when implementing the class
+    def __init__(self, size):
+        self.size = size
+        self.data = [None] * size
 
-# Test your hash table implementation here.  
+    def hash_function(self, key):
+        total = 0
+        for char in key:
+            total += ord(char)
+        return total % self.size
+
+    def insert(self, key, value):
+        index = self.hash_function(key)
+        current = self.data[index]
+
+        # If there are no value currently at this position
+        if self.data[index] is None:
+            self.data[index] = Node(key, value)
+            return
+
+        # Iterate until you reach a value of None
+        while current:
+            if current.key == key:
+                current.value = value
+                return
+
+            # Stop at last node
+            if current.next is None:
+                break
+
+            current = current.next
+
+        current.next = Node(key, value) # Add to the end of the list
+
+    def search(self, key):
+        index = self.hash_function(key)
+        current = self.data[index]
+
+        while current:
+            if current.key == key:
+                return str(current.key + ": " + current.value)
+            current = current.next
+
+        return None
+
+    def print_table(self):
+        for index, node in enumerate(self.data):
+            if node is None:
+                print(f"Index {index}: Empty")
+                continue
+
+            contacts = []
+            current = node
+            while current is not None:
+                contacts.append(f"{current.key}: {current.value}")
+                current = current.next
+
+            print(f"Index {index}: - " + " - ".join(contacts))
+    
+
+def main():
+    # Test basic function
+    table = HashTable(10)
+    table.print_table()
+
+    table.insert("John", "909-876-1234")
+    table.insert("Rebecca", "111-555-0002")
+
+    # Test after insertion
+    print("\n")
+    table.print_table()
+
+    # Search for a value
+    contact = table.search("John")
+    print("\nSearch result:", contact)
+
+    
+
+main()
